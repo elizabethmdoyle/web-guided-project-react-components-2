@@ -8,6 +8,7 @@ import Search from './Search'
 // (Tomorrow we'll fetch the data from an API instead.)
 import friendsData, {hello} from '../dummy-data/friends'
 
+console.log(friendsData)
 
 export default function App() {
   // 👉 3- Initialize a slice of state to keep track of the data
@@ -18,13 +19,21 @@ export default function App() {
   // 👉 4- Initialize a slice to keep track of the value of the search box
   // using an empty string as the initial value of the slice
 
-  const [searchBox, setSearchBox] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
 
   // 👉 5- Build a `changeStatus` function that takes an id and
   // changes the `married` from true to false and viceversa
 
-  function changeStatus(id) {
-    
+  const changeStatus = (id) => {
+    console.log(id)
+    const updatedFriends = friends.map(fr => {
+      if(fr.id === id) {
+         return { ...fr, married: !fr.married}
+      } else {
+        return fr
+      }
+    })
+    setFriends(updatedFriends)
   }
 
   // STRETCH - Make a helper function that returns
@@ -33,8 +42,9 @@ export default function App() {
   return (
     <div className='app-friends container'>
       {/* 👉 6- Render the Search component */}
+      <Search />
       {/* STRETCH - Changes to the input should update the search term */}
-
+      <FriendsList friends={friends} changeStatus={changeStatus}/>
       {/* 👉 7- Render the FriendsList component */}
       {/* What prop/props does FriendsList need? */}
     </div>
